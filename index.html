@@ -70,6 +70,19 @@
       );
     }
 
+    /* Overlay superior — oscurece el cielo para destacar el contenido */
+    .bg-overlay-top {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.30) 0%,
+        transparent 60%
+      );
+    }
+
     /* ─── CORNER MASK (cubre marca de agua) ─────────────── */
     .corner-mask {
       position: fixed;
@@ -318,6 +331,9 @@
 
   <!-- Overlay verde oscuro -->
   <div class="bg-overlay" aria-hidden="true"></div>
+
+  <!-- Overlay superior oscuro (vignette top) -->
+  <div class="bg-overlay-top" aria-hidden="true"></div>
 
   <!-- Tapa marca de agua esquina superior izquierda -->
   <div class="corner-mask" aria-hidden="true"></div>
