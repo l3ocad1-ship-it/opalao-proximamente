@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPALAO — Próximamente</title>
+  <meta name="description" content="OPALAO — Tu portal espiritual. Sanación holística desde Oaxaca, México. Próximamente." />
+
+  <!-- PRODUCCIÓN: reemplazar el <video> src con la ruta final del archivo de video -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --opalao-verde:        #1A6647;
+      --opalao-dorado:       #C9A84C;
+      --opalao-crema:        #F5F0E8;
+      --opalao-negro:        #0D1A10;
+      --opalao-dorado-suave: #E8C97A;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: var(--opalao-negro);
+    }
+
+    /* ─── STAGE ─────────────────────────────────────────── */
+    .stage {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ─── FONDO: VIDEO ───────────────────────────────────── */
+    .bg-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      z-index: 0;
+    }
+
+    /* Overlay gradiente verde oscuro */
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 40, 20, 0.08) 0%,
+        rgba(0, 30, 15, 0.22) 40%,
+        rgba(0, 30, 15, 0.55) 100%
+      );
+    }
+
+    /* ─── CORNER MASK (cubre marca de agua) ─────────────── */
+    .corner-mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 120px;
+      height: 120px;
+      z-index: 9999;
+      background: radial-gradient(
+        circle at top left,
+        rgba(0, 0, 0, 0.65) 0%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    /* ─── CONTENT WRAPPER ───────────────────────────────── */
+    .content {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 120px 24px 48px;
+    }
+
+    /* ─── BLOQUE SUPERIOR ───────────────────────────────── */
+    .block-top {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      max-width: 420px;
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 2px 24px rgba(0, 0, 0, 0.4));
+    }
+
+    /* ─── BLOQUE CENTRAL ─────────────────────────────────── */
+    .block-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .tagline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(16px, 2.5vw, 22px);
+      color: var(--opalao-crema);
+      letter-spacing: 0.4em;
+      text-align: center;
+      margin-bottom: 20px;
+      white-space: nowrap;
+    }
+
+    /* Separador ◆ */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 180px;
+      margin: 0 auto 22px;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(201, 168, 76, 0.45);
+    }
+
+    .divider-gem {
+      font-size: 7px;
+      color: rgba(201, 168, 76, 0.45);
+      line-height: 1;
+      padding: 0 7px;
+      flex-shrink: 0;
+    }
+
+    .headline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(48px, 8vw, 100px);
+      color: var(--opalao-crema);
+      letter-spacing: -0.01em;
+      line-height: 0.92;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .filosofico {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(17px, 2.2vw, 22px);
+      color: rgba(245, 240, 232, 0.82);
+      max-width: 500px;
+      line-height: 1.75;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    /* ─── BLOQUE INFERIOR ───────────────────────────────── */
+    .block-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    /* Redes sociales */
+    .social-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 14px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: rgba(201, 168, 76, 0.70);
+      transition: color 300ms ease;
+      line-height: 1;
+    }
+
+    .social-link svg {
+      width: 26px;
+      height: 26px;
+      fill: currentColor;
+      display: block;
+    }
+
+    .social-link:hover {
+      color: var(--opalao-dorado);
+    }
+
+    /* Contacto */
+    .contacto {
+      font-family: 'Jost', sans-serif;
+      font-weight: 500;
+      color: rgba(201, 168, 76, 0.75);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 2.2;
+      font-style: normal;
+    }
+
+    .contacto a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 300ms ease;
+    }
+
+    .contacto a:hover {
+      color: var(--opalao-dorado);
+    }
+
+    /* ─── ANIMACIONES DE ENTRADA ─────────────────────────── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .anim {
+      opacity: 0;
+      animation: fadeUp ease-out forwards;
+    }
+
+    .anim-logo       { animation-duration: 1200ms; animation-delay: 0ms; }
+    .anim-tagline    { animation-duration: 1000ms; animation-delay: 400ms; }
+    .anim-divider    { animation-duration: 800ms;  animation-delay: 700ms; }
+    .anim-headline   { animation-duration: 1200ms; animation-delay: 900ms; }
+    .anim-filosofico { animation-duration: 1000ms; animation-delay: 1300ms; }
+    .anim-social     { animation-duration: 800ms;  animation-delay: 1600ms; }
+    .anim-contacto   { animation-duration: 800ms;  animation-delay: 1800ms; }
+
+    /* ─── RESPONSIVE MOBILE ──────────────────────────────── */
+    @media (max-width: 600px) {
+      .content {
+        padding: 100px 20px 36px;
+      }
+      .logo {
+        max-width: 280px;
+      }
+      .filosofico {
+        max-width: 88vw;
+        font-size: clamp(13px, 3.8vw, 16px);
+      }
+      .contacto {
+        font-size: 10px;
+        letter-spacing: 0.10em;
+      }
+    }
+
+    /* Landscape / short screens */
+    @media (max-height: 620px) {
+      .content {
+        padding: 28px 24px 24px;
+      }
+      .logo { max-width: 150px; }
+      .tagline { margin-bottom: 12px; font-size: 11px; }
+      .divider { margin-bottom: 12px; }
+      .headline { font-size: clamp(36px, 6vw, 60px); margin-bottom: 12px; }
+      .filosofico { display: none; }
+      .social-row { margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- FONDO: Video del árbol con hojas cayendo -->
+  <video
+    class="bg-video"
+    autoplay
+    loop
+    muted
+    playsinline
+    aria-label="Fondo animado de OPALAO, árbol con hojas cayendo"
+  >
+    <source src="uploads/BUENO IDEAL PARA USAR.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Overlay verde oscuro -->
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <!-- Tapa marca de agua esquina superior izquierda -->
+  <div class="corner-mask" aria-hidden="true"></div>
+
+  <!-- CONTENIDO -->
+  <main class="content">
+
+    <!-- BLOQUE SUPERIOR -->
+    <div class="block-top">
+      <img
+        class="logo anim anim-logo"
+        src="uploads/opalao-logo-verde-transparent.png"
+        alt="OPALAO — Sanación holística y espiritual, Oaxaca"
+      />
+    </div>
+
+    <!-- BLOQUE CENTRAL -->
+    <div class="block-center">
+
+      <p class="tagline anim anim-tagline">tu portal espiritual</p>
+
+      <div class="divider anim anim-divider" aria-hidden="true">
+        <span class="divider-line"></span>
+        <span class="divider-gem">◆</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <h1 class="headline anim anim-headline">Próximamente</h1>
+
+      <p class="filosofico anim anim-filosofico">
+        Opalao nace desde un momento de transformación personal,
+        donde el dolor, la sensibilidad y la búsqueda de sentido
+        se convirtieron en puerta de sanación.
+      </p>
+
+    </div>
+
+    <!-- BLOQUE INFERIOR -->
+    <div class="block-bottom">
+
+      <!-- Redes sociales -->
+      <nav class="social-row anim anim-social" aria-label="Redes sociales de OPALAO">
+
+        <!-- Instagram -->
+        <a
+          class="social-link"
+          href="https://www.instagram.com/0palao?igsh=MW5ybDYzMmFnYzlmYw=="
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram de OPALAO"
+        >
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+
+        <!-- TikTok -->
+        <a
+          class="social-link"
+          href="https://www.tiktok.com/@0palao"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="TikTok de OPALAO"
+        >
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+          </svg>
+        </a>
+
+        <!-- Facebook -->
+        <a
+          class="social-link"
+          href="https://www.facebook.com/share/1EVhtdJHA4/?mibextid=wwXIfr"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook de OPALAO"
+        >
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+
+      </nav>
+
+      <!-- Datos de contacto -->
+      <address class="contacto anim anim-contacto">
+        <div>Segunda Privada de Vicente Suárez 118, Col. Vicente Suárez, Centro, Oaxaca</div>
+        <div>
+          <a href="tel:9515639508">951 563 9508</a>
+          &nbsp;◆&nbsp;
+          <a href="mailto:opalaosoundhealing@gmail.com">opalaosoundhealing@gmail.com</a>
+        </div>
+      </address>
+
+    </div><!-- /block-bottom -->
+
+  </main>
+
+</div><!-- /stage -->
+
+</body>
+</html>
